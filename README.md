@@ -1,27 +1,69 @@
 https://itch.io/game/edit/4101062#published
 
-# Unity week 5: Two-dimensional scene-building and path-finding
+# מטלת Tilemap + Pathfinding
 
-A project with step-by-step scenes illustrating how to construct a 2D scene using tilemaps,
-and how to do path-finding using the BFS algorithm.
+## מבנה כללי
+הפרויקט מחולק לשני חלקים עיקריים:
 
-Text explanations are available 
-[here](https://github.com/gamedev-at-ariel/gamedev-5782) in folder 07.
+1. הרחבת התנהגות אויבים בעזרת מכונת מצבים (FSM) – סעיף ג’ בחלק הראשון.
+2. אלגוריתם לבחירת נקודת התחלה “לא תקועה” במפת מערה אקראית – סעיף ב’ בחלק האלגוריתמים.
 
-## Cloning
-To clone the project, you may need to install git lfs first:
+---
 
-    git lfs install 
+## 1. מכונת מצבים לאויב (Guard FSM)
 
+בסצנה `e-guard-fsm`:
 
-## Credits
+- יצרתי שומר עם שלושה מצבים:
+  - Idle – עומד במקום לזמן קבוע.
+  - Patrol – נע לאורך מסלול נקודות במפה.
+  - Chase – רודף אחרי השחקן באמצעות ה־BFS מהשיעור.
+- המעברים בין המצבים:
+  - Idle → Chase כשמרחק מהשחקן קטן מרדיוס ראייה.
+  - Idle → Patrol אחרי סיום זמן ההמתנה.
+  - Patrol → Chase כשמרחק מהשחקן קטן מרדיוס ראייה.
+  - Chase → Patrol כשהשחקן מתרחק מעבר לרדיוס “איבוד”.
+- השתמשתי במחלקת StateMachine כללית:
+  - מחזיקה רשימת מצבים ומעברים.
+  - דואגת שרק מצב אחד יהיה פעיל בכל רגע.
+- כל הפרמטרים (זמן idle, רדיוסי ראייה) מוגדרים כשדות `[SerializeField]` עם שמות משמעותיים, כדי להימנע ממספרי קסם.
 
-Graphics:
-* [Ultima 4 Graphics](https://github.com/jahshuwaa/u4graphics) by Joshua Steele.
+---
 
-Online course:
-* [Unity 2D](https://www.udemy.com/course/unitycourse/learn/lecture/10246496), a Udemy course by Gamedev.tv.
-* [Unity RPG](https://www.gamedev.tv/p/unity-rpg/?product_id=1503859&coupon_code=JOINUS).
+## 2. אלגוריתם “לא תקוע במערה” (BFS על Cave)
+
+### 2.1 לוגיקה מופשטת (קונסול + בדיקות)
+
+- מימשתי מחלקה המייצגת מערה כרשת ריבועית של קירות/רצפה.
+- מימשתי פונקציה שסופרת בעזרת BFS כמה אריחי רצפה שונים נגישים מנקודת התחלה.
+- מימשתי פונקציה שבוחרת נקודת התחלה אקראית:
+  - בודקת בעזרת BFS האם ניתן להגיע ממנה למספר מינימלי של אריחים (100).
+  - אם לא – בוחרת נקודה אחרת, עד למספר ניסיונות מרבי.
+- הוספתי בדיקות יחידה על מפות קטנות כדי לוודא שה־BFS וספירת האריחים עובדים נכון.
+
+### 2.2 שילוב ביוניטי – סצנה `e-cave-good-start`
+
+- שכפלתי את הסצנה `d-tilemap-100-player` והרחבתי את הסקריפט `TilemapCaveGenerator`.
+- תהליך העבודה:
+  - יצירת מערה אקראית על גודל 100×100 והרצת צעדי “חלקות”.
+  - בחירת נקודת התחלה לשחקן:
+    - בחירת תא רצפה אקראי.
+    - הרצת BFS וספירת אריחי רצפה נגישים.
+    - אם יש לפחות 100 אריחים – המרת הקואורדינטות למיקום בעולם והזזת השחקן לשם.
+    - אם לא – ניסיון נוסף, עד למקסימום ניסיונות.
+- כל הערכים (גודל המפה, מספר צעדי סימולציה, מספר אריחים מינימלי, מספר ניסיונות, seed רנדומלי) מוגדרים כשדות `[SerializeField]` ללא מספרי קסם בקוד.
+
+---
+
+## 3. איך להריץ
+
+1. **Guard FSM**  
+   - לפתוח את הסצנה `Assets/Scenes/3-enemies/e-guard-fsm`.  
+   - להריץ את המשחק ולראות את השומר שעובר בין Idle → Patrol → Chase וחזרה לפי מיקום השחקן.
+
+2. **Cave BFS**  
+   - לפתוח את הסצנה `Assets/Scenes/4-generation/e-cave-good-start`.  
+   - להריץ את המשחק: המערה נוצרת, ואחר כך השחקן ממוקם אוטומטית בנקודה שממנה ניתן להגיע לפחות ל־100 אריחי רצפה שונים.
 
 Procedural generation:
 * [Habrador - Unity Programming Patterns](https://github.com/Habrador/Unity-Programming-Patterns#7-double-buffer)
