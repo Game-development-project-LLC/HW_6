@@ -66,6 +66,7 @@
     <Compile Include="Assets\Scripts\2-player\ClickMover.cs" />
     <Compile Include="Assets\Scripts\0-bfs\BFS.cs" />
     <Compile Include="Assets\Scripts\3-enemies\Cycle.cs" />
+    <Compile Include="Assets\Scripts\2-player\SceneSwitcher.cs" />
     <Compile Include="Assets\Scripts\2-player\KeyboardMover.cs" />
     <Compile Include="Assets\Scripts\2-player\TargetMover.cs" />
     <Compile Include="Assets\Scripts\4-generation\TilemapCaveGenerator.cs" />
