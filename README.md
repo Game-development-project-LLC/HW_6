@@ -51,22 +51,6 @@ https://itch.io/game/edit/4101062#published
     - הרצת BFS וספירת אריחי רצפה נגישים.
     - אם יש לפחות 100 אריחים – המרת הקואורדינטות למיקום בעולם והזזת השחקן לשם.
     - אם לא – ניסיון נוסף, עד למקסימום ניסיונות.
-- כל הערכים (גודל המפה, מספר צעדי סימולציה, מספר אריחים מינימלי, מספר ניסיונות, seed רנדומלי) מוגדרים כשדות `[SerializeField]` ללא מספרי קסם בקוד.
-
----
-
-## 3. איך להריץ
-
-1. **Guard FSM**  
-   - לפתוח את הסצנה `Assets/Scenes/3-enemies/e-guard-fsm`.  
-   - להריץ את המשחק ולראות את השומר שעובר בין Idle → Patrol → Chase וחזרה לפי מיקום השחקן.
-
-2. **Cave BFS**  
-   - לפתוח את הסצנה `Assets/Scenes/4-generation/e-cave-good-start`.  
-   - להריץ את המשחק: המערה נוצרת, ואחר כך השחקן ממוקם אוטומטית בנקודה שממנה ניתן להגיע לפחות ל־100 אריחי רצפה שונים.
-
-Procedural generation:
-* [Habrador - Unity Programming Patterns](https://github.com/Habrador/Unity-Programming-Patterns#7-double-buffer)
-
+- כל הערכים (גודל המפה, מספר צעדי סימולציה, מספר אריחים מינימלי, מספר ניסיונות, seed רנדומלי) מוגדרים כשדות `[SerializeField]`.
 Programming:
-* Erel Segal-Halevi
+* Omer Shahar
