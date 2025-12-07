@@ -1,4 +1,4 @@
-https://itch.io/game/edit/4101062#published
+https://omerzshahar.itch.io/hw-6
 # מטלת Tilemap + Pathfinding
 
 ## מבנה כללי
